@@ -1,5 +1,5 @@
 # 00-Acqua-00
- Acqua 3D printer project
+  Acqua 3D printer project
  
  Este proyecto se basa en la reconstrucción de una antigua impresora 3D Colido Compact.
  
