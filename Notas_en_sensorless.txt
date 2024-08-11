@@ -1,0 +1,52 @@
+Limitations¶
+Be sure that your mechanical components are able to handle the load of the carriage bumping into the limit of the axis repeatedly. Especially leadscrews might generate a lot of force. Homing a Z axis by bumping the nozzle into the printing surface might not be a good idea. For best results, verify that the axis carriage will make a firm contact with the axis limit.
+
+Further, sensorless homing might not be accurate enough for your printer. While homing X and Y axes on a cartesian machine can work well, homing the Z axis is generally not accurate enough and may result in an inconsistent first layer height. Homing a delta printer sensorless is not advisable due to missing accuracy.
+
+Further, the stall detection of the stepper driver is dependent on the mechanical load on the motor, the motor current and the motor temperature (coil resistance).
+
+Sensorless homing works best at medium motor speeds. For very slow speeds (less than 10 RPM) the motor does not generate significant back EMF and the TMC cannot reliably detect motor stalls. Further, at very high speeds, the back EMF of the motor approaches the supply voltage of the motor, so the TMC cannot detect stalls anymore. It is advised to have a look in the datasheet of your specific TMCs. There you can also find more details on limitations of this setup.
+
+Prerequisites¶
+A few prerequisites are needed to use sensorless homing:
+
+A stallGuard capable TMC stepper driver (tmc2130, tmc2209, tmc2660, or tmc5160).
+SPI / UART interface of the TMC driver wired to micro-controller (stand-alone mode does not work).
+The appropriate "DIAG" or "SG_TST" pin of TMC driver connected to the micro-controller.
+The steps in the config checks document must be run to confirm the stepper motors are configured and working properly.
+Tuning¶
+The procedure described here has six major steps:
+
+Choose a homing speed.
+Configure the printer.cfg file to enable sensorless homing.
+Find the stallguard setting with highest sensitivity that successfully homes.
+Find the stallguard setting with lowest sensitivity that successfully homes with a single touch.
+Update the printer.cfg with the desired stallguard setting.
+Create or update printer.cfg macros to home consistently.
+Choose homing speed¶
+The homing speed is an important choice when performing sensorless homing. It's desirable to use a slow homing speed so that the carriage does not exert excessive force on the frame when making contact with the end of the rail. However, the TMC drivers can't reliably detect a stall at very slow speeds.
+
+A good starting point for the homing speed is for the stepper motor to make a full rotation every two seconds. For many axes this will be the rotation_distance divided by two. For example:
+
+
+[stepper_x]
+rotation_distance: 40
+homing_speed: 20
+...
+Configure printer.cfg for sensorless homing¶
+The homing_retract_dist setting must be set to zero in the stepper_x config section to disable the second homing move. The second homing attempt does not add value when using sensorless homing, it will not work reliably, and it will confuse the tuning process.
+
+Be sure that a hold_current setting is not specified in the TMC driver section of the config. (If a hold_current is set then after contact is made, the motor stops while the carriage is pressed against the end of the rail, and reducing the current while in that position may cause the carriage to move - that results in poor performance and will confuse the tuning process.)
+
+It is necessary to configure the sensorless homing pins and to configure initial "stallguard" settings. A tmc2209 example configuration for an X axis might look like:
+
+
+[tmc2209 stepper_x]
+diag_pin: ^PA1      # Set to MCU pin connected to TMC DIAG pin
+driver_SGTHRS: 255  # 255 is most sensitive value, 0 is least sensitive
+...
+
+[stepper_x]
+endstop_pin: tmc2209_stepper_x:virtual_endstop
+homing_retract_dist: 0
+...
