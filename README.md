@@ -23,21 +23,37 @@
 Elementos que se han mejorado hasta ahora:
  
  - Nuevo diseño e instalación de cama caliente
- - Nuevo diseño de elevación del eje Z con husillo y tuerca de laton
- - Nuevo sistema de sujeccion y alineamiento de barras verticales eje Z
- - Nuevo carro de extrusion
+ - Nueva superficie de construción
+ - Nuevo diseño de elevación del eje Z, con husillo y tuerca de laton
+ - Nuevo sistema de sujeccion y alineamiento de barras verticales eje Z, eliminando holguras existentes
+ - Nuevo carro de extrusion de alta tecnología y con toolhead CAN Bus
  - Extrusora Sherpa
  - Sistema de extrusión V6 mejorado con disipador
  - Ventilación de hot end
- - Ventilación de capa
- - Sensor para auto nivelación
+ - Ventilación de capa por conductos
+ - Sensor Superpinda para auto nivelación
  - Eliminación de interruptores de final de carrera, cambio a sensorless
  - Conector de potencia aislado para alimentación
+ - Interruptos de alimentación bipolar y con luz
  - Fuente de alimentación interna de 24 V, 300 W
- - Sensor de filamento
+ - Sensor de temperatura en la fuente de alimentacion
+ - Ventilador en la fuente de alimentación
+ - Sensor de filamento de diseño propio desarrollado para esta máquina
  - Cambio placa de 8 bits por una de 32 bits, BTT SKR Pico
+ - Ventilador controlado por temperatura en la SKR Pico
  - Adición de BTT Pi como procesador de control
+ - Ventilador controlado por temperatura en la BTT Pi
  - Cambio a Klipper
  - Mejora general en la ventilacion
+ - Pantalla tactil
+ - Sistema de regulación de tornillos en pantalla
+ - Toolhead CAN Bus para reducir el numero de cables que llegan al cabezal móvil
+ - Relé de diseño propio para corte de energía al acabar la impresión
+ - Buzzer
+ - Leds Neopixel para monitorizar estados
+ - Tira Led inteligente
+ - Porta bobinas mucho mas eficiente
+ - Sistema de guiado de filamento
+ - Mejora e implantación de un sistema de gestion de cableado interior
 
 Y seguimos ...
